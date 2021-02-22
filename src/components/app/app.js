@@ -5,8 +5,11 @@ import './app.css';
 import AppHeader from '../app-header';
 import RosterList from '../roster-list';
 import SearchPanel from '../search-panel';
-import ItemStatusFilter from '../item-status-filter';
-import AddItemForm from '../add-item-form';
+import WorkerStatusFilter from '../worker-status-filter';
+import AddWorkerBtn from '../add-worker-btn';
+
+import AddWorkerForm from '../add-worker-form';
+import WorkerInfo from '../worker-info';
 
 const App = () => {
   const workersList = [
@@ -51,16 +54,19 @@ const App = () => {
   return (
     <div className="staff-roster-app card border-light mb-3">
       <div className="card-header">
-        <AppHeader />
+        <AppHeader count={ workersList.length }/>
       </div>
       <div className="card-body">
         <div className="top-panel d-flex">
           <SearchPanel />
-          <ItemStatusFilter />
+          <WorkerStatusFilter />
         </div>
         <RosterList workers={ workersList }/>
-        <AddItemForm />
+        <AddWorkerBtn />
       </div>
+
+      <AddWorkerForm />
+      <WorkerInfo />
     </div>
   );
 };

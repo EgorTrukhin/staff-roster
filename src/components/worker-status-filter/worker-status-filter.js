@@ -1,15 +1,15 @@
 import React from 'react';
 
-import './item-status-filter.css';
+import './worker-status-filter.css';
 
-export default class ItemStatusFilter extends React.Component {
+export default class WorkerStatusFilter extends React.Component {
   constructor() {
     super();
 
     this.buttons = [
       {name: 'all', label: 'Все'},
-      {name: 'stillWork', label: 'Работает'},
-      {name: 'dismissed', label: 'Уволен'}
+      {name: 'stillWork', label: 'Работают'},
+      {name: 'dismissed', label: 'Уволены'}
     ];
   }
 

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './add-item-form.css';
+import './add-worker-btn.css';
 
-export default class AddItemForm extends React.Component {
+export default class AddWorkerBtn extends React.Component {
   constructor() {
     super();
 

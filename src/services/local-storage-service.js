@@ -42,4 +42,15 @@ export default class SRStorage extends SRStorageInit {
     this.setId(worker.id);
     this.setItemToStorage(worker.id, worker);
   }
+
+  // del
+  deleteId(id) {
+    const new_ids = this.getWorkersIds().filter(item => item != id);
+    this.setItemToStorage("ids", new_ids.sort());
+  }
+
+  deleteStorageItem(id){
+    this.deleteId(id);
+    localStorage.removeItem(id);
+  }
 }

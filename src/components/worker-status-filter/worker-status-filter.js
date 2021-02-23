@@ -14,11 +14,16 @@ export default class WorkerStatusFilter extends React.Component {
   }
 
   render() {
+    const { filter, onFilter } = this.props;
     const btns = this.buttons.map(( {name, label} ) => {
+      const isActive = name == filter;
+      const className = isActive ? "btn-info" : "btn-outline-info";
+
       return (
         <button type="button"
-                className="btn btn-outline-info btn-sm"
-                key={ name }>
+                className={ `btn ${ className }` }
+                key={ name }
+                onClick={ () => onFilter(name) }>
                 { label }
         </button>
       );

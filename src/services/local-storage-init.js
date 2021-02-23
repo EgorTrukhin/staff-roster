@@ -84,7 +84,7 @@ export default class SRStorageInit {
 
   checkInit() {
     return this.keys.every((key) => {
-      return localStorage.getItem(key) != null;
+      return (localStorage.getItem(key) != null);
     });
   }
 

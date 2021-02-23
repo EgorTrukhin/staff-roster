@@ -1,4 +1,3 @@
-.info-container {
-  position: absolute;
-  display: none;
+.modal-footer {
+  justify-content: space-between;
 }

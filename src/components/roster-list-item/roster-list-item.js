@@ -2,11 +2,10 @@ import React from 'react';
 
 import './roster-list-item.css';
 
-const RosterListItem = ({ ...props }) => {
-
-  const fullName = `${props.firstName} ${props.lastName} ${props.middleName}`;
-  const job = `Профессия: ${props.job}`;
-  const workDates = !props.dismisDate ? `Работает с ${props.empDate}` : `Работал с ${props.empDate} по ${props.dismisDate}`
+const RosterListItem = ({ mainInfo, job }) => {
+  const fullName = `${mainInfo.name.first} ${mainInfo.name.last} ${mainInfo.name.middle}`;
+  const position = `Профессия: ${job.position}`;
+  const workDates = !job.dismisDate ? `Работает с ${job.empDate}` : `Работал с ${job.empDate} по ${job.dismisDate}`
 
   return (
     <div className="roster-list-item">
@@ -16,7 +15,7 @@ const RosterListItem = ({ ...props }) => {
           { fullName }
         </span>
         <span className="roster-list-item-info">
-          <p>{ job }</p>
+          <p>{ position }</p>
           <p>{ workDates }</p>
         </span>
       </span>

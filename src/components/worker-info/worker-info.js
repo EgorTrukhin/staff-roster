@@ -8,10 +8,10 @@ export default class WorkerInfo extends React.Component {
 
   render() {
     return (
-      <div class="info-container card border-primary mb-3">
-        <div class="card-header">Информация о сотруднике</div>
-        <div class="card-body">
-          
+      <div className="info-container card border-primary mb-3">
+        <div className="card-header">Информация о сотруднике</div>
+        <div className="card-body">
+
         </div>
       </div>
     );

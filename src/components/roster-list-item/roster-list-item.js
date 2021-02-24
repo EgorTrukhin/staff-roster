@@ -4,7 +4,7 @@ import './roster-list-item.css';
 
 import EditDelButtons from '../edit-n-del-buttons';
 
-const RosterListItem = ({ mainInfo, job, onEdit, onDelete }) => {
+const RosterListItem = ({ mainInfo, job, onEdit, onDelete, onShowModal }) => {
   const fullName = `${mainInfo.name.first} ${mainInfo.name.last} ${mainInfo.name.middle}`;
   const position = `Профессия: ${job.position}`;
   const workDates = !job.dismisDate ? `Работает с ${job.empDate}` : `Работал с ${job.empDate} по ${job.dismisDate}`
@@ -12,7 +12,10 @@ const RosterListItem = ({ mainInfo, job, onEdit, onDelete }) => {
   return (
     <div className="roster-list-item">
 
-      <span className="roster-list-item-clickzone">
+      <span
+        className="roster-list-item-clickzone"
+        onClick={ onShowModal }
+      >
         <span className="roster-list-item-name">
           { fullName }
         </span>
@@ -24,7 +27,7 @@ const RosterListItem = ({ mainInfo, job, onEdit, onDelete }) => {
 
       <EditDelButtons
         onEdit={ onEdit }
-        onDelete={ onDelete } 
+        onDelete={ onDelete }
       />
 
     </div>

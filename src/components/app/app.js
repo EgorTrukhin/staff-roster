@@ -22,11 +22,30 @@ export default class App extends React.Component {
     this.state = {
       workersList: this._storage.getWorkersData(),
       search: '',
-      filter: 'all'
+      filter: 'all',
+      currID: null,
+      showModalWorkerInfo: false,
+      showModalAddWorker: false
+    }
+
+    this.showWorkerInfo = (id) => {
+      this.setState(( { showModalWorkerInfo } ) => {
+        return {
+          currID: id,
+          showModalWorkerInfo: !showModalWorkerInfo
+        };
+      });
+    }
+
+    this.showAddForm = () => {
+      this.setState(( { showModalAddWorker } ) => {
+        return {
+          showModalAddWorker: !showModalAddWorker
+        };
+      });
     }
 
     this.onDeleteWorker = (id) => {
-      console.log(id);
       this.setState((state) => {
         this._storage.deleteStorageItem(id);
         const workersList = this._storage.getWorkersData();
@@ -87,16 +106,25 @@ export default class App extends React.Component {
             workers={ visibleWorkers }
             onEdit={ this.onEditWorker }
             onDelete={ this.onDeleteWorker }
+            onShowModal={ this.showWorkerInfo }
             />
           <FormButton
             label="Добавить сотрудника"
             type="button"
             css="btn-primary float-right"
+            onClick={ this.showAddForm }
           />
         </div>
 
-        <AddWorkerForm />
-        <WorkerInfo />
+        <AddWorkerForm
+          showModalAddWorker={ this.state.showModalAddWorker }
+          closeModal={ this.showAddForm }
+        />
+        <WorkerInfo
+          showModalWorkerInfo={ this.state.showModalWorkerInfo }
+          closeModal={ this.showWorkerInfo }
+          currID={ this.state.currID }
+        />
       </div>
     );
   }

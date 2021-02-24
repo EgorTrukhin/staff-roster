@@ -1,41 +1,57 @@
 import React from 'react';
 import './worker-info.css';
 
+import Modal from '../modal';
 import FormButton from '../form-button';
 import EditDelButtons from '../edit-n-del-buttons';
 
-export default class WorkerInfo extends React.Component {
-  constructor() {
-    super();
-  }
+import SRStorage from '../../services/local-storage-service';
 
-  render() {
-    return (
-      <div className="modal">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Modal title</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <p>Modal body text goes here.</p>
-            </div>
-            <div className="modal-footer">
-              <EditDelButtons />
-              <div>
-                <FormButton
-                  label="Close"
-                  type="button"
-                  css="btn-secondary"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+const WorkerInfo = ( { showModalWorkerInfo, closeModal, currID } ) => {
+  const _storage = new SRStorage();
+  let content = null;
+
+  if (showModalWorkerInfo) {
+    const { mainInfo, job } = _storage.getStorageItem(currID);;
+    const name = `${mainInfo.name.first} ${mainInfo.name.last} ${mainInfo.name.middle}`
+
+    content = (
+      <p>
+        ФИО: { name }
+        Пол: { mainInfo.sex === 'male' ? "Мужской" : "Женский" }
+        Дата рождения: { mainInfo.birthDay }
+        Водительские права: { mainInfo.hasDriveLicense ? "Есть" : "Нет" }
+        Должность: { job.position }
+        Дата приема: { job.empDate }
+        Дата увольнения: { job.dismisDate ? job.dismisDate : "-" }
+      </p>
     );
   }
+
+  const children = {
+    title: "Информация о сотруднике",
+    body: content,
+    footer: (
+      <>
+        <EditDelButtons />
+        <div>
+          <FormButton
+            label="Закрыть"
+            type="button"
+            css="btn-secondary btn-sm"
+            onClick={ closeModal }
+          />
+        </div>
+      </>
+    )
+  }
+  return (
+    <>
+    {
+      showModalWorkerInfo ? <Modal children={ children } closeModal={ closeModal } clazz="worker-info" /> : null
+    }
+    </>
+  );
 };
+
+export default WorkerInfo;

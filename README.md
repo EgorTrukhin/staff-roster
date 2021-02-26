@@ -1,5 +1,5 @@
 # Задание выполнено!!!!
-GotHub Pages: https://egortrukhin.github.io/staff-roster/
+GitHub Pages: https://egortrukhin.github.io/staff-roster/
 
 # Тестовое задание Junior Frontend Developer
 

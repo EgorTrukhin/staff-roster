@@ -7,24 +7,57 @@ import EditDelButtons from '../edit-n-del-buttons';
 
 import SRStorage from '../../services/local-storage-service';
 
-const WorkerInfo = ( { showModalWorkerInfo, closeModal, currID } ) => {
+// МОДАЛЬНОЕ ОКНО ДЛЯ ОТОБРАЖЕНИЯ ИНФОРМАЦИИ О СОТРУДНИКЕ
+// По полученному id достается сотрудник из хранилища
+const WorkerInfo = ( { showModalWorkerInfo, closeModal, currID, onEdit, onDelete } ) => {
   const _storage = new SRStorage();
   let content = null;
 
   if (showModalWorkerInfo) {
-    const { mainInfo, job } = _storage.getStorageItem(currID);;
-    const name = `${mainInfo.name.first} ${mainInfo.name.last} ${mainInfo.name.middle}`
+    const worker = _storage.getStorageItem(currID);;
+    const name = `${worker.firstName} ${worker.lastName} ${worker.middleName}`
 
     content = (
-      <p>
-        ФИО: { name }
-        Пол: { mainInfo.sex === 'male' ? "Мужской" : "Женский" }
-        Дата рождения: { mainInfo.birthDay }
-        Водительские права: { mainInfo.hasDriveLicense ? "Есть" : "Нет" }
-        Должность: { job.position }
-        Дата приема: { job.empDate }
-        Дата увольнения: { job.dismisDate ? job.dismisDate : "-" }
-      </p>
+      <div className="worker-info-content">
+        <div className="worker-info-content-item personal-info">
+        <h6>Личная информация</h6>
+          <span>
+            { `ФИО:
+            ${ name }`}
+          </span>
+          <span>
+            { `Пол:
+            ${ worker.sex === 'male' ? "мужской" : "женский" }`}
+          </span>
+          <span>
+            { `Дата рождения:
+            ${ worker.birthDay }`}
+          </span>
+          <span>
+            { `Водительские права:
+            ${ worker.hasDriveLicense ? "есть" : "нет" }`}
+          </span>
+
+        </div>
+        <div className="worker-info-content-item job-info">
+          <h6>Статус в компании</h6>
+          <span>
+            { `Должность:
+            ${ worker.position } `}
+          </span>
+          <span>
+            { `Дата приема:
+            ${ worker.empDate } `}
+          </span>
+          {
+            worker.dismisDate ?
+              <span>
+                { `Дата увольнения:
+                ${ worker.dismisDate } `}
+              </span> : null
+          }
+        </div>
+      </div>
     );
   }
 
@@ -33,7 +66,10 @@ const WorkerInfo = ( { showModalWorkerInfo, closeModal, currID } ) => {
     body: content,
     footer: (
       <>
-        <EditDelButtons />
+        <EditDelButtons
+          onEdit={ () => { closeModal(); onEdit(currID) } }
+          onDelete={ () => { closeModal(); onDelete(currID) } }
+        />
         <div>
           <FormButton
             label="Закрыть"

@@ -2,6 +2,8 @@ import React from 'react';
 
 import './modal.css';
 
+// МОДАЛЬНОЕ ОКНО
+// (классы css, дочерние элементы для вставки в модалку, функция закрытия окна)
 const Modal = ( { clazz, children, closeModal } ) => {
   const { title, body, footer } = children;
   return (

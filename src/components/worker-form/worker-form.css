@@ -1,0 +1,25 @@
+.add-worker-form .modal-footer {
+  justify-content: center;
+  flex-direction: column;
+}
+
+.add-worker-form .name-input {
+  margin-top: 0.5rem;
+}
+
+.add-worker-form legend {
+  font-size: 1.1rem;
+}
+
+.add-worker-form form-btn {
+  margin: 0;
+}
+
+.invalid-input {
+  font-size: 70%;
+  color: #ff7851;
+}
+
+.cancel-btn {
+  margin-left: 0.5rem;
+}

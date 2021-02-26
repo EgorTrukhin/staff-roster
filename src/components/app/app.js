@@ -1,3 +1,5 @@
+// ПРИЛОЖЕНИЕ
+
 import React from 'react';
 
 import './app.css';
@@ -8,26 +10,28 @@ import SearchPanel from '../search-panel';
 import WorkerStatusFilter from '../worker-status-filter';
 
 import FormButton from '../form-button';
-import AddWorkerForm from '../add-worker-form';
+import WorkerForm from '../worker-form';
 import WorkerInfo from '../worker-info';
 
 import SRStorage from '../../services/local-storage-service';
 
+// подключение хранилища
+const _storage = new SRStorage();
 export default class App extends React.Component {
   constructor() {
     super();
 
-    this._storage = new SRStorage();
-
     this.state = {
-      workersList: this._storage.getWorkersData(),
+      workersList: _storage.getWorkersData(),
       search: '',
       filter: 'all',
       currID: null,
       showModalWorkerInfo: false,
-      showModalAddWorker: false
+      showModalAddWorker: false,
+      showModalEditWorker: false
     }
 
+    // показать/закрыть модалку с информаций о сотруднике
     this.showWorkerInfo = (id) => {
       this.setState(( { showModalWorkerInfo } ) => {
         return {
@@ -37,6 +41,7 @@ export default class App extends React.Component {
       });
     }
 
+    // показать/закрыть модалку с добавлением сотрудника
     this.showAddForm = () => {
       this.setState(( { showModalAddWorker } ) => {
         return {
@@ -45,42 +50,63 @@ export default class App extends React.Component {
       });
     }
 
+    // показать/закрыть модалку с редактированием сотрудника
+    this.onEditWorker = (id) => {
+      this.setState(( { showModalEditWorker } ) => {
+        return {
+          currID: id,
+          showModalEditWorker: !showModalEditWorker
+        };
+      });
+    }
+
+    // обновление списка при добавлении/редактировании сотрудника
+    this.onAdd = () => {
+      const workersList = _storage.getWorkersData();
+      this.setState({ workersList })
+    }
+
+    // обновление списка при удалении сотрудника
     this.onDeleteWorker = (id) => {
-      this.setState((state) => {
-        this._storage.deleteStorageItem(id);
-        const workersList = this._storage.getWorkersData();
+      this.setState(() => {
+        _storage.deleteStorageItem(id);
+        const workersList = _storage.getWorkersData();
 
         return { workersList };
       });
     };
 
+    // обновление списка при поиске сотрудника
     this.onSearch = (search) => {
       this.setState({ search });
     };
 
+    // обновление списка при фильтре сотрудников
     this.onFilter = (filter) => {
       this.setState({ filter });
     };
 
+    // способ поиска
     this.search = (workersList, search) => {
       if (search.length == 0) {
         return workersList;
       }
 
       return workersList.filter((worker) =>
-        worker.mainInfo.name.first.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
-        worker.mainInfo.name.last.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
-        worker.mainInfo.name.middle.toLowerCase().indexOf(search.toLowerCase()) > -1
+        worker.firstName.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+        worker.lastName.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+        worker.middleName.toLowerCase().indexOf(search.toLowerCase()) > -1
       );
     }
 
+    // способ фильтрации
     this.filter = (workersList, filter) => {
       if (filter == 'all') {
         return workersList;
       } else if (filter == 'stillWork') {
-        return workersList.filter((worker) => worker.job.dismisDate === null)
+        return workersList.filter((worker) => worker.dismisDate === "")
       } else {
-        return workersList.filter((worker) => worker.job.dismisDate != null)
+        return workersList.filter((worker) => worker.dismisDate != "")
       }
     }
   }
@@ -116,12 +142,21 @@ export default class App extends React.Component {
           />
         </div>
 
-        <AddWorkerForm
+        <WorkerForm
+          currID={ this.state.currID }
+          addItem={ this.onAdd }
+          showModalAddWorker={ this.state.showModalEditWorker }
+          closeModal={ this.onEditWorker }
+        />
+        <WorkerForm
+          addItem={ this.onAdd }
           showModalAddWorker={ this.state.showModalAddWorker }
           closeModal={ this.showAddForm }
         />
         <WorkerInfo
           showModalWorkerInfo={ this.state.showModalWorkerInfo }
+          onEdit={ this.onEditWorker }
+          onDelete={ this.onDeleteWorker }
           closeModal={ this.showWorkerInfo }
           currID={ this.state.currID }
         />

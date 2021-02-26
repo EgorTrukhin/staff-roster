@@ -2,6 +2,7 @@ import React from 'react';
 
 import './edit-n-del-buttons.css';
 
+// КНОПКИ РЕДАКТИРОВАНИЯ И УДАЛЕНИЯ СОТРУДНИКА
 const EditDelButtons = ( { onEdit, onDelete } ) => {
 
   return (

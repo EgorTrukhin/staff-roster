@@ -1,13 +1,14 @@
 import React from 'react';
 
 import './roster-list-item.css';
-
 import EditDelButtons from '../edit-n-del-buttons';
 
-const RosterListItem = ({ mainInfo, job, onEdit, onDelete, onShowModal }) => {
-  const fullName = `${mainInfo.name.first} ${mainInfo.name.last} ${mainInfo.name.middle}`;
-  const position = `Профессия: ${job.position}`;
-  const workDates = !job.dismisDate ? `Работает с ${job.empDate}` : `Работал с ${job.empDate} по ${job.dismisDate}`
+// ЭЛЕМЕНТ СПИСКА СОТРУДНИКОВ ПРИЛОЖЕНИЯ
+const RosterListItem = ({ props, onEdit, onDelete, onShowModal }) => {
+  const fullName = `${props.lastName} ${props.firstName} ${props.middleName}`;
+  const position = `Должность: ${props.position}`;
+  const workDates = !props.dismisDate ?
+  `Работает с ${props.empDate}` : `Работал с ${props.empDate} по ${props.dismisDate}`
 
   return (
     <div className="roster-list-item">

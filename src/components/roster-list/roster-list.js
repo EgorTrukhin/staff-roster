@@ -3,6 +3,7 @@ import React from 'react';
 import RosterListItem from '../roster-list-item'
 import './roster-list.css';
 
+// СПИСОК СОТРУДНИКОВ
 const RosterList = ( { workers, onEdit, onDelete, onShowModal } ) => {
   const listItems = workers.map(
     (item) => {
@@ -13,7 +14,7 @@ const RosterList = ( { workers, onEdit, onDelete, onShowModal } ) => {
             onEdit = { () => onEdit(id) }
             onDelete = { () => onDelete(id) }
             onShowModal = { () => onShowModal(id) }
-            { ...itemProps }
+            props={ itemProps }
           />
         </li>
       );

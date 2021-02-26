@@ -134,7 +134,7 @@ export default class WorkerForm extends React.Component {
         formErrors.middleName = nameRegex.test(value) || value.length === 0 ? "" : "Неверный синтаксис!";
         break;
       case "empDate":
-        formErrors.dismisDate = value > this.state.empDate || value.length === 0 ? "" : "Дата увольнения должная быть позже даты приема";
+        formErrors.dismisDate = !this.state.editing || value > this.state.empDate || value.length === 0 ? "" : "Дата увольнения должная быть позже даты приема";
         break;
       case "dismisDate":
         formErrors.dismisDate = value > this.state.empDate || value.length === 0 ? "" : "Дата увольнения должная быть позже даты приема";
@@ -343,7 +343,7 @@ export default class WorkerForm extends React.Component {
           <legend>Дата приема на работу</legend>
           <div className="form-group">
             <input
-              value={editing ? this.state.empDate : ""}
+              value={ this.state.empDate ? this.state.empDate : "" }
               noValidate
               onChange={ this.handleChange }
               name="empDate"

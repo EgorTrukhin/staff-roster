@@ -187,6 +187,7 @@ export default class WorkerForm extends React.Component {
 
     const { formErrors, editing } = this.state;
 
+    // поле Дата увольнения сотрудника (добавляется в форму только при редактировании)
     const dismisDate = (
     <div className="form-group">
       <legend>Дата увольнения</legend>
@@ -321,7 +322,7 @@ export default class WorkerForm extends React.Component {
               className="custom-control-input"
               id="hasLicense"
               />
-            <label className="custom-control-label" htmlFor="hasLic">Есть</label>
+            <label className="custom-control-label" htmlFor="hasLicense">Есть</label>
           </div>
         </div>
 
